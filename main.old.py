@@ -9,11 +9,13 @@ def connect(func):
 
 def create_db() -> bool:
     connection = sqlite3.connect("documents.db")
+
     if connection is None:
         return False
     #print(connection)
     with open("init_db.sql") as f:
         connection.executescript(f.read())
+
     connection.commit()
     connection.close()
     return True
@@ -24,9 +26,7 @@ def populate_with_data():
     cur = connection.cursor()
 
     cur.execute("INSERT INTO tag (name, description) VALUES (?, ?)",
-                ("tag_1",
-                 "Description of tag 1")
-                )
+                ("tag_1", "Description of tag 1"))
     tag_1_id = cur.lastrowid
 
     cur.execute("INSERT INTO tag (name) VALUES (?)",
